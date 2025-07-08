@@ -35,7 +35,24 @@ public class Calculator {
             throw new RuntimeException(e);
         }
 
+        // 연산 결과는 최대 5개 저장
+        if (results.size() > 4)
+            removeResult();
+
         results.add(result);
+    }
+
+    public void printResultsHistory() {
+        System.out.println("연산 결과 : ");
+
+        for (Integer result : results) {
+            System.out.print(result);
+            System.out.print(", ");
+        }
+    }
+
+    public void removeResult() {
+        results.remove(0);
     }
 
     public void setFirstNum(int n) {

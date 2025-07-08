@@ -40,11 +40,11 @@ public class Calculator2nd {
             c.calculate();
             result = c.getLastCalc();
 
-            // 결과 출력
-            System.out.println("계산 결과 : " + num1 + " " + symbol + " " + num2 + " = "  + result);
+            /* 결과 출력 */
+            c.printResultsHistory();
 
             /* 진행 확인 */
-            System.out.print("더 계산하시겠습니까? (exit 입력 시 종료) ");
+            System.out.print("...\n연산은 최대 5개까지 저장됩니다. 더 계산하시겠습니까? (exit 입력 시 종료) ");
             input = s.nextLine();
 
             if (input.equals("exit")) {
