@@ -49,10 +49,10 @@ public class Calculator1st {
                 System.out.println("계산 결과 : " + value1 + " " + sign + " " + value2 + " = "  + result);
             } catch (ArithmeticException e) {   // 'n / 0' 형태의 오류일 경우
                 System.out.println("0으로 나눌 수 없습니다. 프로그램을 종료합니다.");
-                break;
+                throw new RuntimeException(e);
             } catch (Exception e) {             // 사칙 연산 입력이 잘못된 경우
                 System.out.println("올바른 입력이 아닙니다. 프로그램을 종료합니다.");
-                break;
+                throw new RuntimeException(e);
             }
 
             /* 진행 확인 */
