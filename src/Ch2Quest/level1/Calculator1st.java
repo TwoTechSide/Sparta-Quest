@@ -1,4 +1,4 @@
-package kotlinCh2Quest.level1;
+package Ch2Quest.level1;
 
 import java.util.Scanner;
 
