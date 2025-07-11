@@ -2,7 +2,7 @@ package Ch2Quest.level2;
 
 import java.util.Scanner;
 
-public class Calculator2nd {
+public class App {
 
     public static void main(String[] args) {
         Calculator c = new Calculator();
