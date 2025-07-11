@@ -1,6 +1,7 @@
 package Ch2Quest.level2;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Scanner;
 import java.util.Set;
 
@@ -17,65 +18,86 @@ public class App {
         symbolSet.add("*");
         symbolSet.add("/");
 
-        String symbol;
-
         while (true) {
             System.out.println("ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ");
-
-            String input;
-            int num1, num2;
 
             /* 숫자 입력 */
             while (true) {
                 try {
                     System.out.print("첫 번째 값을 입력해주세요 : ");
-                    num1 = Integer.parseInt(s.nextLine());
+                    int num1 = Integer.parseInt(s.nextLine());
                     System.out.print("두 번째 값을 입력해주세요 : ");
-                    num2 = Integer.parseInt(s.nextLine());
+                    int num2 = Integer.parseInt(s.nextLine());
 
                     if (num1 < 0 || num2 < 0)
                         throw new Exception();
 
+                    c.setFirstNum(num1);
+                    c.setSecondNum(num2);
                     break;
                 } catch (Exception e) {
                     System.out.println("적절한 입력이 아닙니다. 다시 입력해주세요.");
                 }
             }
 
-            /* 사칙연산 기호 입력 */
+            int lastCalculated;
+
+            /* 사칙연산 기호 입력 후 연산 */
             while (true) {
                 System.out.print("연산을 선택해주세요 [+, -, *, /] : ");
                 String sign = s.nextLine();
 
                 // 정해진 사칙연산을 사용하지 않는 경우 예외 처리
                 try {
-                    if (!symbolSet.contains(sign)) throw new Exception();
-                    symbol = sign;
+                    if (!symbolSet.contains(sign))
+                        throw new Exception();
+
+                    c.setSymbol(sign);
+                    lastCalculated = c.calculate(); // Calculator 클래스에서 계산
                     break;
-                } catch (Exception e) {             // 사칙 연산 입력이 잘못된 경우
-                    System.out.println("올바른 입력이 아닙니다. 사칙연산을 선택해주세요.");
+                } catch (Exception e) {
+                    System.out.println("0으로 나눌 수 없거나 잘못된 입력입니다.");
                 }
             }
 
-            /* Calculator 클래스에 입력 후 계산 */
-            c.setFirstNum(num1);
-            c.setSecondNum(num2);
-            c.setSymbol(symbol);
+            // 최근 연산 결과 확인
+            int num1 = c.getFirstNum();
+            int num2 = c.getSecondNum();
+            String symbol = c.getSymbol();
 
-            c.calculate();
-            c.getLastCalc();
+            System.out.println("계산 결과 : " + num1 + " " + symbol + " " + num2 + " = " + lastCalculated);
 
-            /* 결과 출력 */
-            c.printResultsHistory();
+            boolean isFinish = false;
 
             /* 진행 확인 */
-            System.out.print("...\n연산은 최대 5개까지 저장됩니다. 더 계산하시겠습니까? (exit 입력 시 종료) ");
-            input = s.nextLine();
+            while (true) {
 
-            if (input.equals("exit")) {
-                System.out.println("exit를 입력하여 프로그램을 종료합니다.");
+                // 이전 기록들 확인
+                List<Integer> results = c.getResults();
+                System.out.print("지난 계산 결과 기록 : [ ");
+
+                for (int result : results)
+                    System.out.print(result + ", ");
+
+                System.out.println("... ]");
+
+                System.out.println("이전 기록을 지우려면 'delete' 를, 계산을 끝내려면 'exit' 를, 이어서 계산을 진행하려면 엔터를 눌러주세요 : ");
+                String input = s.nextLine();
+
+                if (input.equals("delete")) {
+                    c.removeFirstResult();
+                    continue;
+                }
+                else if (input.equals("exit")) {
+                    System.out.println("exit를 입력하여 프로그램을 종료합니다.");
+                    isFinish = true;
+                }
                 break;
             }
+
+            // exit 를 입력하면 프로그램 종료
+            if (isFinish)
+                break;
         }
     }
 }
