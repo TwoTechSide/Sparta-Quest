@@ -15,44 +15,50 @@ public class App {
             int value1, value2;
 
             /* 숫자 입력 */
-            try {
-                System.out.print("첫 번째 값을 입력해주세요 : ");
-                value1 = s.nextInt();
-                System.out.print("두 번째 값을 입력해주세요 : ");
-                value2 = s.nextInt();
-            } catch (NumberFormatException e) {
-                System.out.println("적절한 입력이 아닙니다. 프로그램을 종료합니다.");
-                break;
+            while (true) {
+                try {
+                    System.out.print("첫 번째 값을 입력해주세요 : ");
+                    value1 = Integer.parseInt(s.nextLine());
+                    System.out.print("두 번째 값을 입력해주세요 : ");
+                    value2 = Integer.parseInt(s.nextLine());
+
+                    if (value1 < 0 || value2 < 0)
+                        throw new Exception();
+
+                    break;
+                } catch (Exception e) {
+                    System.out.println("적절한 입력이 아닙니다. 다시 입력해주세요.");
+                }
             }
 
             /* 사칙연산 기호 입력 */
-            s.nextLine(); // Scanner 버퍼 비우기
-            System.out.print("연산을 선택해주세요 [+, -, *, /] : ");
-            String sign = s.nextLine();
+            while (true) {
+                System.out.print("연산을 선택해주세요 [+, -, *, /] : ");
+                String sign = s.nextLine();
 
-            // 사칙연산 입력이 잘못 된 경우 예외 처리
-            try {
-                if (sign.length() != 1)
-                    throw new RuntimeException();
+                // 사칙연산 입력이 잘못 된 경우 예외 처리
+                try {
+                    if (sign.length() != 1)
+                        throw new Exception();
 
-                // 사칙 연산 진행, 기호를 벗어난 경우 예외 처리
-                char cSign = sign.charAt(0);
-                int result = switch (cSign) {
-                    case '+' -> value1 + value2;
-                    case '-' -> value1 - value2;
-                    case '*' -> value1 * value2;
-                    case '/' -> value1 / value2;
-                    default -> throw new RuntimeException();
-                };
+                    // 사칙 연산 진행, 기호를 벗어난 경우 예외 처리
+                    char cSign = sign.charAt(0);
+                    int result = switch (cSign) {
+                        case '+' -> value1 + value2;
+                        case '-' -> value1 - value2;
+                        case '*' -> value1 * value2;
+                        case '/' -> value1 / value2;
+                        default -> throw new Exception();
+                    };
 
-                // 결과 출력
-                System.out.println("계산 결과 : " + value1 + " " + sign + " " + value2 + " = "  + result);
-            } catch (ArithmeticException e) {   // 'n / 0' 형태의 오류일 경우
-                System.out.println("0으로 나눌 수 없습니다. 프로그램을 종료합니다.");
-                throw new RuntimeException(e);
-            } catch (Exception e) {             // 사칙 연산 입력이 잘못된 경우
-                System.out.println("올바른 입력이 아닙니다. 프로그램을 종료합니다.");
-                throw new RuntimeException(e);
+                    // 결과 출력
+                    System.out.println("계산 결과 : " + value1 + " " + sign + " " + value2 + " = " + result);
+                    break;
+                } catch (ArithmeticException e) {   // 'n / 0' 형태의 오류일 경우
+                    System.out.println("0으로 나눌 수 없습니다. 다른 연산을 이용해주세요.");
+                } catch (Exception e) {             // 사칙 연산 입력이 잘못된 경우
+                    System.out.println("올바른 입력이 아닙니다. 사칙연산을 선택해주세요.");
+                }
             }
 
             /* 진행 확인 */
