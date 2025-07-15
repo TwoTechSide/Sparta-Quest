@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-public class ArithmeticCalculator {
+public class ArithmeticCalculator<T extends Number> {
 
     private final List<BigDecimal> results = new ArrayList<>();
     private BigDecimal num1;
@@ -54,7 +54,7 @@ public class ArithmeticCalculator {
             results.remove(0);
     }
 
-    public void setNum1(double num1) { this.num1 = BigDecimal.valueOf(num1); }
-    public void setNum2(double num2) { this.num2 = BigDecimal.valueOf(num2); }
+    public void setNum1(T num1) { this.num1 = new BigDecimal(num1.toString()); }
+    public void setNum2(T num2) { this.num2 = new BigDecimal(num2.toString()); }
     public void setSymbol(SymbolEnum symbol) { this.symbol = symbol; }
 }
