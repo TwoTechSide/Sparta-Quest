@@ -7,7 +7,7 @@ import java.util.Scanner;
 public class App {
     public static void main(String[] args) {
 
-        ArithmeticCalculator calculator = new ArithmeticCalculator();
+        ArithmeticCalculator<Number> calculator = new ArithmeticCalculator<>();
         SymbolEnum sb;
 
         Scanner s = new Scanner(System.in);
