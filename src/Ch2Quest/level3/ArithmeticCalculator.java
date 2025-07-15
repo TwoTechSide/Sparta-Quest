@@ -40,11 +40,12 @@ public class ArithmeticCalculator<T extends Number> {
         return Optional.of(result);
     }
 
-    public void printResults() {
-        System.out.print("지난 계산 결과 기록 : [ ");
+    public void printFilteredResults(T threshold) {
+        BigDecimal thresholdDecimal = new BigDecimal(threshold.toString());
+        System.out.print("값이 '" + thresholdDecimal + "'이상인 계산 결과들을 출력 : [ ");
 
-        for (BigDecimal result : results)
-            System.out.print(result + ", ");
+        results.stream().filter(result -> result.compareTo(thresholdDecimal) > 0)
+                        .forEach(result -> System.out.print(result + ", "));
 
         System.out.println("... ]");
     }
